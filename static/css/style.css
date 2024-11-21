@@ -9,6 +9,12 @@ body {
     background-color: #FFF;
 }
 
+ul, li, ol{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 /* 导航栏样式 */
 .navbar {
     display: flex;
@@ -681,7 +687,10 @@ body {
 .preornext a:hover{
     text-decoration: underline;
 }
-
+.timg {
+    height: 200px;
+    display: block;
+}
 /* 响应式设计 */
 @media (max-width: 768px) {
     .navbar {
@@ -743,5 +752,8 @@ body {
     }
     .logo span{
         display: none;
+    }
+    .content iframe{
+        width: 100%;
     }
 }
