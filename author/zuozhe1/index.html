@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>输入法爱好者 - 搜狗输入法</title>
+<link rel="stylesheet" href="/static/css/style.css?v1.1">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+</head>
+
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <img src="/static/images/logo.jpg" alt="搜狗输入法">
+            <span>搜狗输入法·万物输入皆搜狗</span>
+        </a>
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="nav-links">
+            <a href="#">产品</a>
+            <a href="#">企业版</a>
+            <a href="/category/news/">新闻</a>
+            <a href="#" class="contact-btn">联系合作</a>
+        </div>
+    </nav>
+
+    
+<div class="news-grid-gps">
+    
+<div class="breadcrumbs"><a href="/">首页</a> / 作者</div>
+
+    <div class="article-author">
+        <div class="author-avatar"><img src="" alt=""></div>
+        <div class="author-info">
+            <h3><a href="/author//"></a></h3>
+            <p></p>
+        </div>
+    </div>
+</div>
+
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-links">
+                <div class="footer-link-item">
+                    <span>商务合作</span>
+                    <span class="divider">邮箱：</span>
+                    <a href="mailto:hc_bd@tencent.com">hc_bd@tencent.com</a>
+                </div>
+                <div class="footer-link-item">
+                    <span>皮肤、表情、词库合作</span>
+                    <span class="divider">邮箱：</span>
+                    <a href="mailto:hc_bd@tencent.com">hc_bd@tencent.com</a>
+                </div>
+            </div>
+            
+            <div class="footer-partners">
+                <span>合作伙伴：</span>
+                <a href="#">手机中国</a>
+                <span>|</span>
+                <a href="#">格子啦</a>
+                <span>|</span>
+                <a href="#">好助手</a>
+            </div>
+            
+            <div class="footer-copyright">
+                <a href="#">搜狗输入法wap版</a>
+                <span>-</span>
+                <a href="#">企业推广</a>
+                <span>-</span>
+                <a href="#">拼音输入法</a>
+                <span>-</span>
+                <a href="#">搜狗知识室</a>
+                <br>
+                © 2024 SOGOU.COM 京ICP证110018号号-1 
+                <a href="#">免责声明</a>
+                <a href="#">隐私政策</a>
+            </div>
+        </div>
+    </footer>
+
+    
+    <script>
+        // 汉堡菜单交互
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        });
+
+        // 修改后的轮播图功能
+        const carousel = document.querySelector('.carousel');
+        const dots = document.querySelectorAll('.dot');
+        const slides = document.querySelectorAll('.feature-card');
+        let currentSlide = 0;
+        let isTransitioning = false;
+
+        function updateDots(index) {
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        function goToSlide(index) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentSlide = index;
+            const offset = -index * 100 / 3; // 因为有3个卡片，所以除以3
+            carousel.style.transform = `translateX(${offset}%)`;
+            updateDots(index);
+
+            // 动画结束后重置transitioning标志
+            setTimeout(() => {
+                isTransitioning = false;
+            }, 500); // 与CSS过渡时间相匹配
+        }
+
+        // 点击圆点切换轮播图
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                if (currentSlide !== index) {
+                    goToSlide(index);
+                }
+            });
+        });
+
+        // 自动轮播
+        function autoSlide() {
+            let nextSlide = (currentSlide + 1) % slides.length;
+            goToSlide(nextSlide);
+        }
+
+        let slideInterval = setInterval(autoSlide, 5000);
+
+        // 当用户与轮播图交互时重置定时器
+        carousel.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            slideInterval = setInterval(autoSlide, 5000);
+        });
+
+        // 触摸事件支持
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            clearInterval(slideInterval);
+        }, false);
+
+        carousel.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+        }, false);
+
+        carousel.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+
+            if (Math.abs(diff) > 50) { // 最小滑动距离
+                if (diff > 0 && currentSlide < slides.length - 1) {
+                    // 向左滑动
+                    goToSlide(currentSlide + 1);
+                } else if (diff < 0 && currentSlide > 0) {
+                    // 向右滑动
+                    goToSlide(currentSlide - 1);
+                }
+            }
+
+            slideInterval = setInterval(autoSlide, 5000);
+        }, false);
+
+        // 初始化第一张幻灯片
+        goToSlide(0);
+    </script>
+</body>
+
+</html>
