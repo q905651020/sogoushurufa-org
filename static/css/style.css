@@ -690,6 +690,8 @@ ul, li, ol{
 .timg {
     height: 200px;
     display: block;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
 }
 /* 响应式设计 */
 @media (max-width: 768px) {
